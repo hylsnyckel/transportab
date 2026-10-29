@@ -45,11 +45,12 @@ Shared/
 ├── Ledning/
 └── Logistik/
 
-User	Role	Security Groups
-Anna Ekonomi	Finance	Ekonomi, Gemensamt
-Bob Boss	Management	Ledning, Gemensamt
-Carl Logistik	Logistics / Warehouse	Logistik, Gemensamt
-Lars IT	IT Administrator	IT, Gemensamt
+| User          | Role                  | Security Groups       |
+| ------------- | --------------------- | --------------------- |
+| Anna Ekonomi  | Finance               | Ekonomi, Gemensamt    |
+| Bob Boss      | Management            | Ledning, Gemensamt    |
+| Carl Logistik | Logistics / Warehouse | Logistik, Gemensamt   |
+| Lars IT       | IT Administrator      | IT, Gemensamt         |
 
 Access is managed using Active Directory security groups. 
 
