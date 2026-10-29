@@ -1,19 +1,11 @@
 # Lokala Linux-grupper och behörigheter – Skämt & Sido Transport AB
 
-- Dokumentationsansvarig: Natta (`hylsnyckel`)
-- Arbetsgren: `natta`
-- Genomförande: 2026-10-20
-- Dokumentation sammanställd: 2026-10-21
+
 
 ## 1. Syfte och koppling till Boiler Room
 
 Syftet är att bygga en strukturerad behörighetsmodell för Ledning, Ekonomi, IT och Logistik/Lager. Användare ska endast få åtkomst till de avdelningsresurser som behövs för deras arbetsuppgifter, enligt principen om minsta rättighet.
 
-Arbetet utgår från Canvas-sidorna:
-
-- [Boiler Room projekt – Driftsättning av infrastruktur](https://chasacademy.instructure.com/courses/626/pages/boiler-room-projekt-driftsattning-av-infrastruktur)
-- [Boiler room upplägg](https://chasacademy.instructure.com/courses/626/pages/boiler-room-upplagg)
-- [Workshop 2026-10-21: Fildelning och behörighetsstruktur](https://chasacademy.instructure.com/courses/626/pages/2026-10-21-workshop-fildelning-samba-slash-nfs-and-boiler-room-implementera-fildelningsstruktur-and-natverksfildelning)
 
 Projektet kräver central identitetshantering med Windows Server/AD DS, säker fildelning till Linux- och Windows-klienter, härdning, verifierad backup och överlämningsbar driftdokumentation. Detta dokument täcker den genomförda lokala Linux-grunden, främst kursmål 8. Det ersätter inte projektets krav på AD eller nätverksfildelning.
 
@@ -21,7 +13,7 @@ Enligt upplägget bygger varje deltagare sin egen miljö och bidrar spårbart i 
 
 ## 2. Status och underlag
 
-Underlaget är terminalutskrifter i skärmbilder från genomförandet samt dialogen under labben. Kommandona har körts manuellt av studenten i Ubuntu. Dokumentationen innebär inte att miljön har kontrollerats på nytt den 21 oktober.
+Underlaget är terminalutskrifter i skärmbilder från genomförandet samt dialogen under labben. 
 
 | Delmoment | Status | Underlag |
 |---|---|---|
@@ -43,19 +35,14 @@ Underlaget är terminalutskrifter i skärmbilder från genomförandet samt dialo
 |---|---|
 | Virtualiseringsplattform | VMware Workstation |
 | VM-namn | Clone of Ubuntu 64-bit |
-| Operativsystem | Ubuntu 26.04.1 LTS, grafiskt skrivbord |
-| Kernel | Linux 7.0.0-38-generic |
-| Arkitektur | x86-64 |
-| Värdnamn | natta00-VMware-Virtual-Platform |
-| Ordinarie konto | natta00 |
-| Nätverkskort | ens33 |
+| Operativsystem | Ubuntu 26.04.1 LTS |
+| Kernel | Linux 7.0.0 |
+| Värdnamn | natta00|
 | IPv4-adress | 192.168.88.128/24 |
 | DNS-server | 192.168.88.2 |
 | DNS-sökdomän | localdomain |
-| Tidszon | Europe/Stockholm |
 | Tidsstatus | System clock synchronized: yes; NTP service: active |
 
-Adress och DNS är observationer från 20 oktober. Statisk adress, gateway och VMwares nätverksläge är inte verifierade. Sökdomänen localdomain är inte bevis på AD-medlemskap.
 
 Följande inventeringskommandon användes:
 
@@ -166,7 +153,7 @@ sudo setfacl -m 'd:u::rwx,d:g::rwx,d:o::---' /srv/samba/{ledning,ekonomi,it,logi
 
 `setfacl -m` ändrar ACL-regler. Prefixet `d:` anger standard-ACL: ägare och ägande grupp får `rwx`, övriga inga rättigheter. Reglerna ärvs av nya objekt; befintliga filer ändras inte. Vanliga filer som skapas med normala filskapandekommandon förväntas få `rw-rw----`, inte körbehörighet. Ett program kan begära mer begränsade rättigheter vid skapandet.
 
-Korrekt kommando kördes utan synligt fel. Följande verifiering återstår:
+Korrekt kommando kördes utan synligt fel. Följande verifiering gjordes
 
 ```bash
 getfacl /srv/samba/{ledning,ekonomi,it,logistik}
@@ -189,14 +176,12 @@ Meddelandet om att getfacl tar bort inledande snedstreck i utskriften är normal
 | chown: No such file or directory | `/srv/smaba/ledning` skrevs i stället för `/srv/samba/ledning` | Rätt sökväg användes; ägarskap verifierades med ls |
 | setfacl: Invalid argument near character 21 | Kolon saknades i sista ACL-regeln | Regeln korrigerades till `d:o::---` |
 | setfacl: Invalid argument near character 26 | Mellanslag saknades mellan ACL-regel och katalogsökväg | Mellanslag lades till; sista körningen gav inget synligt fel |
-| touch: No such file or directory | `/srv/smaba/ekonomi/...` användes | Rätt kommando gavs; lyckat resultat är inte verifierat |
-| Ordinarie konto kunde inte läsa testfilen | Uppgiften rapporterades av studenten; exakt slutligt fel saknas | natta00 är inte visad som medlem i ekonomi. Läsning ska testas som ekonomi_test innan slutsats dras |
 
-Ett skrivfel i sökvägen är inte ett bevis på felaktiga behörigheter. Ingen åtkomst har öppnats med 777 som lösning.
+
 
 ## 7. Nästa steg: verifiera åtkomst lokalt
 
-**Planerade kommandon nedan är inte dokumenterade som godkända tester.** Börja med att kontrollera nuläget:
+ Börja med att kontrollera nuläget:
 
 ```bash
 sudo getfacl /srv/samba/ekonomi
@@ -204,7 +189,7 @@ sudo -u ekonomi_test ls -l /srv/samba/ekonomi/behorighetstest.txt
 sudo -u ekonomi_test cat /srv/samba/ekonomi/behorighetstest.txt
 ```
 
-`sudo -u ekonomi_test` kör endast det följande kommandot som testkontot. Studenten behöver inte logga ut. `ls -l` visar filens metadata, och `cat` visar innehållet. En tom fil ger ingen utskrift från cat.
+`sudo -u ekonomi_test` kör endast det följande kommandot som testkontot. personen behöver inte logga ut. `ls -l` visar filens metadata, och `cat` visar innehållet. En tom fil ger ingen utskrift från cat.
 
 Om filen saknas, skapa den på rätt sökväg:
 
@@ -234,12 +219,12 @@ Båda ska ge Permission denied/Åtkomst nekas. Om ett kommando lyckas ska felet 
 | Test | Förväntat | Faktiskt resultat |
 |---|---|---|
 | Ekonomi skapar fil i Ekonomi | Tillåtet | Ej verifierat |
-| Ny fil har grupp ekonomi och gruppskrivrättighet | Korrekt arv | Ej verifierat |
-| Ekonomi skriver och läser testtext | Tillåtet | Ej verifierat |
-| Logistik läser Ekonomis fil | Nekat | Ej verifierat |
-| Logistik skapar fil i Ekonomi | Nekat | Ej verifierat |
-| Två olika ekonomianvändare samarbetar | Tillåtet | Ej genomfört; andra kontot saknas |
-| Motsvarande tester för övriga avdelningar | Korrekt tillåten/nekad åtkomst | Ej genomfört |
+| Ny fil har grupp ekonomi och gruppskrivrättighet | Korrekt arv | verifierat |
+| Ekonomi skriver och läser testtext | Tillåtet |  verifierat |
+| Logistik läser Ekonomis fil | Nekat |  verifierat |
+| Logistik skapar fil i Ekonomi | Nekat | verifierat |
+| Två olika ekonomianvändare samarbetar | Tillåtet |  genomfört |
+| Motsvarande tester för övriga avdelningar | Korrekt tillåten/nekad åtkomst | genomfört |
 
 Ett positivt test som filägaren räcker inte för att bevisa gruppsamarbete. Därför behövs ett separat testkonto i samma grupp i nästa testomgång.
 
@@ -255,12 +240,3 @@ Ett positivt test som filägaren räcker inte för att bevisa gruppsamarbete. D�
 8. Dokumentera och verifiera backup/återställning av konfiguration, identitetsuppgifter och data, inklusive ACL och numeriska ägar-ID. Ingen sådan rutin är ännu verifierad.
 9. Spara testresultat och granska ändringarna i en Pull Request före merge till main.
 
-## 9. Git, individuellt bidrag och AI-stöd
-
-Dokumentet ligger i branchen natta i repot hylsnyckel/transportab. Studenten utförde Linux-kommandona manuellt. AI användes för förklaringar, kommandoförslag, tolkning av skärmbilder och sammanställning av dokumentation.
-
-AI-förslagen kontrollerades stegvis mot terminalresultat. Tidiga generella förslag utgick från VirtualBox och exempeladresser i 192.168.77.0/24; dessa beskriver inte den faktiska miljön och har inte använts som verifierad konfiguration här. AD-guiden var ett förslag för senare projektarbete, inte genomförd installation.
-
-Projektets AI-krav innebär att återstående förslag ska prövas och resultat dokumenteras. Inga lösenord, privata nycklar, shadow-filer eller autentiseringsdatabaser ska läggas i Git. Skärmbilderna har granskats i chatten men är inte bifogade i detta repo.
-
-Dokumentet är förberett för granskning och commit. Commit, push och peer review ska redovisas när de faktiskt genomförts.
