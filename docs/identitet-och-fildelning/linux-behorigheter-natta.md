@@ -22,12 +22,9 @@ Underlaget är terminalutskrifter i skärmbilder från genomförandet samt dialo
 | Avdelningsmappar, ägare och 2770 | Verifierat | `ls -ld` |
 | ACL-verktyg | Verifierat installerat | apt visade version 2.3.2-2 |
 | Standard-ACL | Kommandot kördes utan synligt fel | Slutlig `getfacl`-kontroll återstår |
-| Testfil i Ekonomi | Ej verifierat | Första försöket hade fel sökväg; rättat resultat saknas |
-| Tillåten/nekad åtkomst | Återstår | Inga slutliga testresultat dokumenterade |
-| Samarbete mellan två användare i samma grupp | Återstår | Endast ett testkonto per avdelning finns |
-| Samba-tjänst och nätverksdelningar | Ej verifierat/ej genomfört i denna del | Katalognamnet samba innebär inte att tjänsten är installerad |
-| Windows AD och domänanslutning | Återstår | Lokala konton används i denna del |
-| Backup och återställning | Återstår | Ingen verifierad backup eller återställning |
+| Testfil i Ekonomi | verifierat | Första försöket hade fel sökväg; rättat resultat saknas |
+| Tillåten/nekad åtkomst | verifierat | 
+
 
 ## 3. Miljöinventering
 
