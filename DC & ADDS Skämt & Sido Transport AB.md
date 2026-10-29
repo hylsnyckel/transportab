@@ -21,15 +21,19 @@ Windows Server with Active Directory Domain Services (AD DS)
 DNS for domain name resolution
 Linux server and client systems on the same network
 Shared folders with access controlled by security groups
+
 ## 3. Active Directory Users and Security Groups
 
 User accounts are organized under GBG/Staff. Security groups are organized under GBG/Groups.
 
-User	Role	Security Groups
-Anna Ekonomi	Finance	Ekonomi, Gemensamt
-Bob Boss	Management	Ledning, Gemensamt
-Carl Logistik	Logistics / Warehouse	Logistik, Gemensamt
-Lars IT	IT Administrator	IT, Gemensamt
+| User          | Role                  | Security Groups       |
+| ------------- | --------------------- | --------------------- |
+| Anna Ekonomi  | Finance               | Ekonomi, Gemensamt    |
+| Bob Boss      | Management            | Ledning, Gemensamt    |
+| Carl Logistik | Logistics / Warehouse | Logistik, Gemensamt   |
+| Lars IT       | IT Administrator      | IT, Gemensamt         |
+
+![Screenshot 2026-10-29 104927](Picture/Screenshot%202026-10-29%104927.png)
 
 
 These groups provide department-based access to shared resources. Administrative privileges should be restricted to authorized personnel.
@@ -38,19 +42,14 @@ These groups provide department-based access to shared resources. Administrative
 
 The main shared directory is named Shared. It contains separate folders for departments and common resources.
 
-Shared/
-├── Ekonomi/
-├── Gemensamt/
-├── IT/
-├── Ledning/
-└── Logistik/
+| Main Folder | Subfolder |
+|-------------|-----------|
+| Shared      | Ekonomi   |
+| Shared      | Gemensamt |
+| Shared      | IT        |
+| Shared      | Ledning   |
+| Shared      | Logistik  |
 
-| User          | Role                  | Security Groups       |
-| ------------- | --------------------- | --------------------- |
-| Anna Ekonomi  | Finance               | Ekonomi, Gemensamt    |
-| Bob Boss      | Management            | Ledning, Gemensamt    |
-| Carl Logistik | Logistics / Warehouse | Logistik, Gemensamt   |
-| Lars IT       | IT Administrator      | IT, Gemensamt         |
 
 Access is managed using Active Directory security groups. 
 
