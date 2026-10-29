@@ -50,6 +50,8 @@ The main shared directory is named Shared. It contains separate folders for depa
 | Shared      | Ledning   |
 | Shared      | Logistik  |
 
+![Screenshot 2026-10-29 105005](Pictures/Screenshot%202026-10-29%20105005.png)
+![Screenshot 2026-10-29 105034](Pictures/Screenshot%202026-10-29%20105034.png)
 
 Access is managed using Active Directory security groups. 
 
