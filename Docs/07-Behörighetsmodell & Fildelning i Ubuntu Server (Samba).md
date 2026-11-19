@@ -182,14 +182,14 @@ sudo systemctl restart smbd
 Skapa exempelanvändare, koppla dem till rätt avdelningsgrupp och aktivera dem i Samba.
 
 ```bash
-# Exempel: Skapa en användare för Ekonomi
-sudo adduser anna_ekonomi
+# Exempel: Skapa en användare för Ledning
+sudo adduser test_Ledning
 
 # Lägg till användaren i rätt grupp
-sudo usermod -aG Ekonomi anna_ekonomi
+sudo usermod -aG Ledning test_Ledning
 
 # Aktivera användaren i Samba och sätt lösenord
-sudo smbpasswd -a anna_ekonomi
+sudo smbpasswd -a test_Ledning
 ```
 
 ---
@@ -204,13 +204,13 @@ För att bekräfta att behörighetsmodellen fungerar utförs tester direkt i det
    Tryck `Win + R` eller klicka i adressfältet i Utforskaren.
 
 2. **Positivt test (Behörig användare):**
-   * Navigera till: `\\192.168.50.50\Ekonomi`
-   * Ange användaruppgifterna för `anna_ekonomi`.
+   * Navigera till: `\\192.168.50.50\Ledning`
+   * Ange användaruppgifterna för `Test_Ledning`.
    * **Förväntat resultat:** Mappen öppnas. Användaren kan skapa en ny textfil/mapp i gränssnittet.
 
 3. **Negativt test (Obehörig användare):**
-   * Navigera till: `\\192.168.50.50\Ledning` med samma inloggade användare (`anna_ekonomi`).
-   * **Förväntat resultat:** Windows visar ett felmeddelande: *"Du har inte behörighet att komma åt \\192.168.50.50\Ledning"* (`Access is denied`).
+   * Navigera till: `\\192.168.50.50\Ekonomi` med samma inloggade användare (`Test_Ledning`).
+   * **Förväntat resultat:** Windows visar ett felmeddelande: *"Du har inte behörighet att komma åt \\192.168.50.50\Ekonomi"* (`Access is denied`).
 
 ### Kontroll av Grupparv på Servern
 
