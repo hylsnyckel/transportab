@@ -1,1 +1,44 @@
-THis is Winodws
+# Teknisk Dokumentation: Windows Server (Installation & Konfiguration)
+
+Denna dokumentation beskriver stegen för att installera och grundkonfigurera Windows Server så att den har nätverksåtkomst (internet) och är redo att användas i drift.
+
+## 1. Grundläggande Installation
+
+1. **Boota från installationsmedia:** Starta servern/VM:en med Windows Server ISO-filen monterad.
+2. **Språk och tangentbord:** Välj önskat språk, tidsformat (Svenska) och tangentbordslayout, klicka på *Next* och sedan *Install now*.
+3. **Välj utgåva:** Välj **Windows Server Standard Evaluation (Desktop Experience)** 
+4. **Licensvillkor & Installationstyp:** Godkänn licensvillkoren och välj **Custom: Install Windows only (advanced)**.
+5. **Partitionering:** Markera din hårddisk och klicka på *Next* för att starta installationen.
+6. **Administratörslösenord:** När installationen är klar och servern startat om, ange ett starkt lösenord för det inbyggda `Administrator`-kontot.
+
+## 2. Nätverkskonfiguration (Statisk IP för internetåtkomst)
+
+För att en server ska vara pålitlig i nätverket bör den ha en statisk IP-adress istället för DHCP. Du kan konfigurera detta via PowerShell eller GUI.
+
+### Grafiskt Gränssnitt (GUI)
+
+1. Öppna **Server Manager** -> klicka på **Local Server** i vänstermenyn.
+2. Klicka på länken bredvid **Ethernet** (ofta står det *IPv4 address assigned by DHCP*).
+3. Högerklicka på ditt nätverkskort och välj **Properties**.
+4. Markera **Internet Protocol Version 4 (TCP/IPv4)** och klicka på **Properties**.
+5. Välj **Use the following IP address** och fyll i:
+   * **IP address:** `192.168.1.50` *(exempel)*
+   * **Subnet mask:** `255.255.255.0`
+   * **Default gateway:** `192.168.1.1` *(routerns IP)*
+6. Välj **Use the following DNS server addresses** och fyll i:
+   * **Preferred DNS server:** `192.168.1.1`
+   * **Alternate DNS server:** `8.8.8.8`
+7. Klicka på **OK** och stäng fönstren.
+
+## 3. Grundläggande Systemkonfiguration & Verifiering
+
+* **Byt datornamn (Hostname):**
+  ```powershell
+  Rename-Computer -NewName "WIN-SRV01" -Restart
+  ```
+
+* **Verifiera internetåtkomst:**
+  ```powershell
+  Test-NetConnection google.com -Port 443
+  ```
+
