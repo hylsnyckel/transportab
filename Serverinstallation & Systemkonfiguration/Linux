@@ -1,1 +1,17 @@
-This is Linux! 
+**Systemkonfiguration/ SAMBA**
+
+
+
+
+prjektbeskrivning: Konfugirerat upp och installerat Samba- kontrollerat och verifierat anslutningen via klientdator samt ändrat nätverksinställningar till statisk ip.
+
+behörighet - least privilage  
+
+konfiguration - steg för steg  
+1. Börjat med att lägga till
+
+
+
+
+
+verifigering och test
