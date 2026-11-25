@@ -1,8 +1,6 @@
 PROJEKTPRESENTATION
 
-# En säker och
-
-strukturerad IT-miljö
+# En säker och strukturerad IT-miljö
 
 Skämt & Sido Transport AB
 
