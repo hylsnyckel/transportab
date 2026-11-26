@@ -94,12 +94,12 @@ sudo ufw status verbose
 ```
 
 
-![ändring av port](pictures/samba_denyport80.png)
+![ändring av port](Pictures/samba_denyport80.png)
 
 
 
 
-![ufw brandvägg](pictures/ufwstatusverbose.png)
+![ufw brandvägg](Pictures/ufwstatusverbose.png)
 
 
 Port 22 används för SSH. Serverns Samba-funktion kräver dessutom att relevant SMB-trafik fungerar.
